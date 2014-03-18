@@ -1,0 +1,33 @@
+# This is a configuration file for ProGuard.
+# http://proguard.sourceforge.net/index.html#manual/usage.html
+
+-dontobfuscate
+-optimizations !code/allocation/variable
+
+-keep class com.askcs.p2000app.** { *; }
+-keep class com.askcs.commons.** { *; }
+-keep class com.almende.eve.** { *; }
+-keep class com.fasterxml.jackson.** { *; }
+-keep class org.jivesoftware.smack.** { *; }
+
+-dontwarn com.almende.eve.transport.http.**
+-dontwarn com.almende.eve.transport.zmq.**
+-dontwarn org.apache.http.**
+-dontwarn org.apache.commons.**
+-dontwarn org.mongojack.**
+-dontwarn javax.servlet.**
+-dontwarn org.osgi.**
+-dontwarn org.slf4j.**
+-dontwarn org.objectweb.asm.**
+-dontwarn org.joda.convert.**
+-dontwarn org.w3c.dom.bootstrap.**
+-dontwarn org.sonatype.guice.**
+-dontwarn org.ektorp.**
+-dontwarn java.beans.**
+
+# Custom;
+-keep class com.fasterxml.jackson.databind.JsonNode
+-keep class org.jivesoftware.smack.** { *; }
+
+-dontwarn java.lang.**
+-dontwarn javax.management.**

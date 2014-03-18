@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App name -->
+    <string name="app_name">P2000 App</string>
+
+    <!-- Service -->
+    <string name="foreground_service_notification_title">P2000 App</string>
+    <string name="foreground_service_notification_text">P2000 App active</string>
+
+    <!-- Menu items -->
+    <string name="menu_setting_general">Settings</string>
+    <string name="menu_setting_capcodes">Capcodes</string>
+    <string name="menu_setting_alarms">Alarms</string>
+    <string name="menu_logout">Logout</string>
+
+    <!-- Actionbar menu items -->
+    <string name="menu_action__refresh">Refresh</string>
+    <string name="menu_action__capcode_add">Add capcode</string>
+
+    <!-- Common strings -->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="refresh">Refresh</string>
+
+    <!-- Crouton messages -->
+    <string name="error_request_timeout">The request has timed out, please try again.</string>
+    <string name="error_no_result">The request failed. Please try again.</string>
+
+    <!-- Loading activity -->
+    <string name="loading_dialog">Loading</string>
+    <string name="loading_login">Logging you in</string>
+    <string name="loading_dialog_p2000_messages">Loading P2000</string>
+    <string name="loading_dialog_p2000_subscriptions">Loading subscriptions</string>
+    <string name="loading_dialog_p2000_add_subscription">Subscribing</string>
+    <string name="loading_dialog_p2000_remove_subscription">Unsubscribing</string>
+    <string name="loading_dialog_alarms">Loading alarm setups</string>
+    <string name="loading_dialog_delete_alarm">Deleting alarm</string>
+    <string name="loading_dialog_add_alarm">Adding alarm</string>
+    <string name="loading_dialog_link_alarm_capcode">Linking AlarmSetup to Capcode</string>
+
+    <!-- Login Activity -->
+    <string name="text_btn_login">Login</string>
+    <string name="login_textlabel_username">Username</string>
+    <string name="login_textlabel_password">Password</string>
+
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">Logout and exit application?</string>
+    <string name="logout_dialog_text">Are you sure you want to logout and exit the application? You will be redirected to the login screen.</string>
+
+    <!-- Main Activity -->
+    <string name="error_no_p2000_messages">No P2000 messages are currently available. Messages will eventually arrive in realtime on this screen if you subscribe on some capcodes via the menu.</string>
+    <string name="new_p2000_message_notification">New P2000 message</string>
+
+    <!-- Settings Activity -->
+    <string name="lv_text_helper_alarmsetup">Alarm setup:</string>
+    <string name="lv_text_helper_alarmsetup_none">None yet</string>
+
+    <!-- Sharedpreferences -->
+    <string name="sp_xmpp_username_key">xmpp_username_key</string>
+    <string name="sp_xmpp_password_key">xmpp_password_key</string>
+    <string name="sp_xmpp_original_password_key">xmpp_original_password_key</string>
+
+    <!--  DateFormatter util -->
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="until">until</string>
+
+    <!-- Add capcode dialog -->
+    <string name="dialog_setting_add_capcode_title">Subscribe</string>
+    <string name="dialog_setting_add_capcode_desc">Fill in a capcode to receive messages from  this capcode in realtime. After you\'ve added the capcode you can configure an alarm for it (e.g. notification, sound, vibrating, filtering, ...)</string>
+
+    <string name="form_label_field_capcode">Capcode:</string>
+    <string name="btn_label_form_add_capcode">Subscribe on capcode</string>
+    <string name="et_capcode_hint">Fill in a capcode or choose one of the autocomplete suggestions</string>
+
+    <string name="settings_dialog_invalid_capcode">Invalid capcode. Should be 6 or 7 numbers long.</string>
+
+    <!-- Confirm capcode unsubscribe capcode -->
+    <string name="settings_dialog_confirm_unsubscribe_title">Confirm unsubscribing</string>
+    <string name="settings_dialog_confirm_unsubscribe_description">Are you sure you want to unsubscribe from capcode %1$s</string>
+    <string name="settings_dialog_yes_unsubscribe">Yes, unsubscribe</string>
+
+    <!-- Link capcode to alarm setup -->
+    <string name="submit_link_alarmsetup_to_capcode">Link Alarm Setup to Capcode</string>
+    <string name="capcode_alarmsetup_link_title">AlarmSetup for capcode:</string>
+
+    <!-- Alarm actities -->
+
+    <!-- Alarm overview -->
+    <string name="add_custom_alarm_setup">Add custom alarm setup</string>
+    <string name="error_no_alarm_setups">Currently you have no custom alarm setups created. An Alarm Setup is a preset of methods to alarm (visually and optically) on your device which can be attached to a capcode (via capcode settings). They will be triggered when an Alarm message comes in for that specific capcode.</string>
+    <string name="dialog_no_alarm_setups">No AlarmSetups to choose from. Create one on the Alarm settings screen.</string>
+    <string name="settings_dialog_confirm_remove_alarm_setup_title">Delete alarm setup</string>
+    <string name="settings_dialog_confirm_remove_alarm_setup_description">Are you sure you want to delete alarm setup: %1$s</string>
+    <string name="settings_dialog_yes_delete">Yes, delete</string>
+
+    <!-- Alarm overview - View setup overlay -->
+    <string name="dialog_alarm_setup_title">Alarm Setup</string>
+
+    <!-- Add alarm -->
+    <string name="add_alarm_setup">Create alarm setup</string>
+</resources>

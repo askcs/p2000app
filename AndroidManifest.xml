@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.askcs.p2000app"
+    android:versionCode="1"
+    android:versionName="1.0-SNAPSHOT" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.P2000App">
+
+        <!-- Activities -->
+        <!-- Start activity -->
+        <activity android:name=".app.LoaderActivity"
+                  android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- All other activities -->
+        <activity android:name=".app.MainActivity"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|screenSize" /> <!-- To prevent show/hide errors for the loading dialog -->
+
+        <activity android:name=".app.LoginActivity" android:launchMode="singleTask" />
+
+        <activity android:name=".app.CapcodeActivity"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|screenSize" /> <!-- To prevent the 'add capcode' dialog from closing on rotate -->
+
+        <activity android:name=".app.EditAlarmActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".app.AlarmActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".app.AddAlarmActivity" android:launchMode="singleTask" android:configChanges="orientation|keyboardHidden|screenSize"/>
+
+        <!-- Most activities extend from BaseActivity -->
+        <activity android:name=".app.BaseActivity"/>
+        <activity android:name=".app.GeneralSettingsActivity"/>
+
+
+        <!-- Eve Service -->
+        <service android:name=".service.EveService" android:exported="false"/>
+
+        <!-- Broadcast receivers -->
+        <receiver android:name=".util.NetworkConnectionUpdateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".service.BootReceiver" android:enabled="true" android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+
+    <!-- Permissions -->
+
+    <!-- Misc permissions -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Internet permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Location permissions -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+
+    <!-- Storage permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+</manifest>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/lv_message_container"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/white_bg"
+  android:orientation="horizontal"
+  android:padding="12dp"
+  android:paddingLeft="20dp"
+  android:paddingRight="20dp">
+
+    <LinearLayout
+            android:id="@+id/actions_container"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:padding="4dp"
+            android:layout_gravity="left"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/actions_container"
+            android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/tv_capcode"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_gravity="left"/>
+
+        <TextView
+            android:id="@+id/tv_alarm_setup_name"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="left"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/actions_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true">
+
+        <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/DarkGray"
+                android:layout_marginRight="10dp"
+                >
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_action_edit"
+                android:id="@+id/btn_capcode_edit"/>
+            <!-- Imagebutton -->
+        </FrameLayout>
+
+        <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/DarkGray"
+                >
+
+            <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_action_delete"
+                    android:id="@+id/btn_capcode_delete"/>
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

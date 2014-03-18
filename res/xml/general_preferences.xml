@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+            android:id="@+id/app_active"
+            android:key="app_active"
+            android:title="App notifications active"
+            android:summary="If disabled, no notifications will be shown"/>
+
+    <EditTextPreference
+            android:id="@+id/general_filter"
+            android:key="general_filter"
+            android:title="Filter words"
+            android:summary="Only show notifications for P2000 messages which have at least on or multiple of the words in this field (separate words with a ; character)"/>
+</PreferenceScreen>

@@ -1,0 +1,10 @@
+.idea
+.settings
+*.iml
+out/
+gen-external-apklibs/
+local.properties
+project.properties
+target/
+bin/
+gen/

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <TableLayout
+            android:id="@+id/mainTable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:paddingLeft="3dip"
+            android:paddingRight="3dip"
+            android:shrinkColumns="1" >
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name: " >
+            </TextView>
+
+            <EditText
+                    android:id="@+id/name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+            </EditText>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Filter word: " >
+            </TextView>
+
+            <EditText
+                    android:id="@+id/filter_word"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+            </EditText>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable notification?" >
+            </TextView>
+
+            <CheckBox
+                    android:id="@+id/check_notification"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable sound?" >
+            </TextView>
+
+            <CheckBox
+                    android:id="@+id/check_sound"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable vibrate?" >
+            </TextView>
+
+            <CheckBox
+                    android:id="@+id/check_vibrate"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable LED?" >
+            </TextView>
+
+            <CheckBox
+                    android:id="@+id/check_led"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enable ScreenOn?" >
+            </TextView>
+
+            <CheckBox
+                    android:id="@+id/check_screenon"/>
+        </TableRow>
+
+        <TableRow>
+            <Button
+                    android:id="@+id/btn_create_alarm_setup"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/add_alarm_setup"
+                    android:enabled="false"/>
+
+            <ProgressBar
+                    android:id="@+id/loading_spinner_dialog"
+                    android:layout_gravity="center_horizontal|top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:background="@android:color/transparent"
+                    style="?android:attr/progressBarStyleLarge" />
+        </TableRow>
+
+    </TableLayout>
+
+
+</LinearLayout>

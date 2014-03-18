@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_custom_alarm_setup"
+            android:id="@+id/btn_add_alarm"
+            android:layout_gravity="center_horizontal"/>
+
+    <TextView
+            android:id="@+id/lv_empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:paddingTop="25dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="@string/error_no_alarm_setups" />
+
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_alarm_setups"/>
+
+</LinearLayout>
