@@ -13,4 +13,11 @@
             android:key="general_filter"
             android:title="Filter words"
             android:summary="Only show notifications for P2000 messages which have at least on or multiple of the words in this field (separate words with a ; character)"/>
+
+    <EditTextPreference
+            android:id="@+id/max_locally_stored_messages"
+            android:key="max_locally_stored_messages"
+            android:title="Message history"
+            android:summary="Maximum amount of locally stored messages (message history)"/>
+
 </PreferenceScreen>

@@ -20,11 +20,11 @@ import com.almende.util.TypeUtil;
 import com.askcs.commons.agent.AskAgent;
 import com.askcs.commons.agent.intf.*;
 import com.askcs.commons.entity.DataSource;
-import com.askcs.commons.entity.P2000Message;
 import com.askcs.p2000app.R;
 import com.askcs.p2000app.app.LoaderActivity;
 import com.askcs.p2000app.entities.AlarmSetup;
 import com.askcs.p2000app.entities.CapcodeSubscription;
+import com.askcs.p2000app.entities.P2000Message;
 import com.askcs.p2000app.events.p2000MessagesStateChangeEvent;
 import com.askcs.p2000app.service.EveService;
 import com.askcs.p2000app.util.BusProvider;
@@ -168,7 +168,7 @@ public class MobileAgent extends AskAgent {
     ArrayList<P2000Message> p2000Messages = getState().get(STATE_FIELD_P2000_MESSAGE, new TypeUtil<ArrayList<P2000Message>>() {});
     if(p2000Messages == null) p2000Messages = new ArrayList<P2000Message>();
 
-    p2000Messages.add( new P2000Message(timestamp, message, capcode) );
+    p2000Messages.add( new P2000Message(Long.valueOf(timestamp), System.currentTimeMillis(), message, capcode) );
 
     // Shorten the p2000Messages array if it's beyond MAX_LOCAL_P2000_MESSAGES
     int p2000MessagesCount = p2000Messages.size();
@@ -186,90 +186,96 @@ public class MobileAgent extends AskAgent {
     // {{{{{{{{{{{{{{{{{{{{{{{{{{
     // {{{{{{{{{{{{{{{{{{{{{{{{{{
     // TODO: Replace with the AlarmSetup system; check for setups for this capcode; get the actual setup; run the setup/preset
-    // Depending on what sound be done it could be executed from here or from within the MainActivity (startActivity with extras)
-    // TODO: Before this can be done: Create interface to link Alarm setups to a capcode
+    // Depending on what should be done it could be executed from here or from within the MainActivity (startActivity with extras)
 
-    // Get the shared prefs field with filtering words (Only accept messages matching one or multiple given filter words)
     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( context );
-    String filtering = sp.getString("general_filter", "");
+    // Check if notifications are active
+    boolean notificationActive = sp.getBoolean("app_active", false); // Default disabled
 
-    // Default values if filtering is not explicitly enabled
-    boolean useFiltering = false;
-    boolean isMatch = false;
+    if(notificationActive){
 
-    // Only use filtering
-    if(!filtering.equals("")){
+      // Get the shared prefs field with filtering words (Only accept messages matching one or multiple given filter words)
+      String filtering = sp.getString("general_filter", "");
 
-      //Log.w(TAG, "Notifications - Filtering enabled");
+      // Default values if filtering is not explicitly enabled
+      boolean useFiltering = false;
+      boolean isMatch = false;
 
-      // Yes please, filtering on from now on
-      useFiltering = true;
+      // Only use filtering
+      if(!filtering.equals("")){
 
-      // Get every single given filter word
-      String[] filterWords = filtering.split(";");
+        //Log.w(TAG, "Notifications - Filtering enabled");
 
-      //Log.w(TAG, "Notifications - Filter words: " + filterWords.toString());
+        // Yes please, filtering on from now on
+        useFiltering = true;
 
-      // Lower the whole string to make the contains() filtering check case-insensitive
-      String m = message.toLowerCase();
+        // Get every single given filter word
+        String[] filterWords = filtering.split(";");
 
-      //Log.w(TAG, "Notifications - Lowered message: " + m);
+        //Log.w(TAG, "Notifications - Filter words: " + filterWords.toString());
 
-      // Loop over P2000 message and search for matches
-      for (String s : filterWords){
+        // Lower the whole string to make the contains() filtering check case-insensitive
+        String m = message.toLowerCase();
 
-        // Convert to lowercase string
-        s = s.toLowerCase();
+        //Log.w(TAG, "Notifications - Lowered message: " + m);
 
-        //Log.w(TAG, "Notifications - Check word: " + s);
-        if( m.contains(s) ){
-          // Hit!
-          //Log.w(TAG, "Notifications - The lowered messages contains the filter word: " + s);
-          isMatch = true;
+        // Loop over P2000 message and search for matches
+        for (String s : filterWords){
+
+          // Convert to lowercase string
+          s = s.toLowerCase();
+
+          //Log.w(TAG, "Notifications - Check word: " + s);
+          if( m.contains(s) ){
+            // Hit!
+            //Log.w(TAG, "Notifications - The lowered messages contains the filter word: " + s);
+            isMatch = true;
+          }
+
         }
 
+      } else {
+        //Log.w(TAG, "Notifications - Filtering disabled");
       }
 
-    } else {
-      //Log.w(TAG, "Notifications - Filtering disabled");
-    }
+      //Log.w(TAG, "Notifications - useFiltering: " + useFiltering + ", isMatch: " + isMatch);
 
-    //Log.w(TAG, "Notifications - useFiltering: " + useFiltering + ", isMatch: " + isMatch);
+      // Only process this message further if filtering is disabled (none given) or if it's enabled, it should match
+      if(useFiltering == false || (useFiltering == true && isMatch == true) ){
 
-    // Only process this message further if filtering is disabled (none given) or if it's enabled, it should match
-    if(useFiltering == false || (useFiltering == true && isMatch == true) ){
+        // Push a notification
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(context, LoaderActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-      // Push a notification
-      NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-      Intent intent = new Intent(context, LoaderActivity.class);
-      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-      PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        // Build notification
+        Notification noti = new NotificationCompat.Builder(context)
+                .setContentTitle("New P2000 message ["+capcode+"]")
+                .setContentText("["+capcode+"] " + message).setSmallIcon(R.drawable.ic_launcher)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setUsesChronometer(true)
+                .setContentIntent(pIntent).build();
 
-      // Build notification
-      Notification noti = new NotificationCompat.Builder(context)
-              .setContentTitle("New P2000 message ["+capcode+"]")
-              .setContentText("["+capcode+"] " + message).setSmallIcon(R.drawable.ic_launcher)
-              .setPriority(Notification.PRIORITY_MAX)
-              .setUsesChronometer(true)
-              .setContentIntent(pIntent).build();
+        // Hide the notification after its selected
+        noti.flags |= Notification.FLAG_AUTO_CANCEL; // Auto remove notification when clicked
 
-      // Hide the notification after its selected
-      noti.flags |= Notification.FLAG_AUTO_CANCEL; // Auto remove notification when clicked
-
-      // Light
-      noti.ledOnMS  = 800;    //Set led blink (Off in ms)
-      noti.ledOffMS = 600;    //Set led blink (Off in ms)
-      noti.ledARGB = 0xff00ff00;   //Set led color
-      noti.flags |= Notification.FLAG_SHOW_LIGHTS;
+        // Light
+        noti.ledOnMS  = 800;    //Set led blink (Off in ms)
+        noti.ledOffMS = 600;    //Set led blink (Off in ms)
+        noti.ledARGB = 0xff00ff00;   //Set led color
+        noti.flags |= Notification.FLAG_SHOW_LIGHTS;
 
 
-      //RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-      //RingtoneManager.getDefaultUri(1);
+        //RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        //RingtoneManager.getDefaultUri(1);
 
-      // Sound
-      noti.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        // Sound
+        noti.sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-      notificationManager.notify(10, noti);
+        notificationManager.notify(10, noti);
+      }
+
     }
 
     // }}}}}}}}}}}}}}}}}}}}}}}}}}
@@ -500,4 +506,13 @@ public class MobileAgent extends AskAgent {
     return this.getAgentHost().createAgentProxy( this, URI.create(getDomainAgentUrl()), DomainAgentIntf.class );
   }
 
+  @Override
+  public String getDataType() {
+    return null;
+  }
+
+  @Override
+  public void purge() throws Exception {
+
+  }
 }

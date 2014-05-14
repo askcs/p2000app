@@ -89,6 +89,12 @@ public class BaseActivity extends ActionBarActivity {
 
   @Override
   public void onPause(){
+
+    // Prevent leak
+    if(dialog != null){
+      dialog.dismiss();
+    }
+
     super.onPause();
   }
 
@@ -237,7 +243,7 @@ public class BaseActivity extends ActionBarActivity {
     tv.setText(loadingMessage);
 
     // Only run this code if the activity is currently not finishing
-    if(!((BaseActivity) this).isFinishing()){
+    if(!((BaseActivity) this).isFinishing() && dialog != null){
       dialog.show();
     }
   }

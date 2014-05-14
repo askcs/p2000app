@@ -8,3 +8,5 @@ project.properties
 target/
 bin/
 gen/
+proguard_project.txt
+proguard_logs/dump.txt

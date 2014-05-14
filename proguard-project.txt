@@ -10,6 +10,7 @@
 -keep class com.fasterxml.jackson.** { *; }
 -keep class org.jivesoftware.smack.** { *; }
 
+-dontwarn com.almende.eve.agent.**
 -dontwarn com.almende.eve.transport.http.**
 -dontwarn com.almende.eve.transport.zmq.**
 -dontwarn org.apache.http.**

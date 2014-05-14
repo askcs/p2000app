@@ -1,29 +1,20 @@
 package com.askcs.p2000app.app;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.*;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.*;
-import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.almende.eve.agent.AgentHost;
-import com.almende.eve.agent.callback.AsyncCallback;
-import com.askcs.commons.entity.P2000Message;
 import com.askcs.p2000app.R;
 import com.askcs.p2000app.agent.MobileAgent;
 import com.askcs.p2000app.callbacks.onEveServiceReady;
-import com.askcs.p2000app.events.EveServiceStateChangeEvent;
-import com.askcs.p2000app.events.LoginEvent;
-import com.askcs.p2000app.events.LoginStateChangeEvent;
+import com.askcs.p2000app.entities.P2000Message;
 import com.askcs.p2000app.events.p2000MessagesStateChangeEvent;
 import com.askcs.p2000app.service.EveService;
 import com.askcs.p2000app.util.BusProvider;
@@ -34,12 +25,13 @@ import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingBottomInAni
 import com.squareup.otto.Subscribe;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import sun.management.resources.agent;
 
-import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeoutException;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Jordi on 24-2-14.
@@ -157,7 +149,7 @@ public class MainActivity extends BaseActivity {
   /* START -- Activity specific functionalities */
 
   // List length properties (UI display)
-  private static final int MAX_DISPLAYED_MESSAGES = 25;
+  private int MAX_DISPLAYED_MESSAGES = 25;
   private int totalMessagesListCount = 0;
   private void loadP2000MessagesList(){
     Log.w(TAG, "[MainActivity] loadP2000MessagesList");
@@ -203,6 +195,18 @@ public class MainActivity extends BaseActivity {
   private void buildP2000List(){
     // Calculate the sublist of the p2000 list
     totalMessagesListCount = p2000messages.size();
+
+    // Check if we have a custom preference for the amount of displayed messages
+    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences( this );
+    String maxLocallyStoredMessagesString = sp.getString("max_locally_stored_messages", "");
+
+    // Override the MAX_DISPLAYED_MESSAGES variable if we have a custom setting
+    if(maxLocallyStoredMessagesString != null && !maxLocallyStoredMessagesString.equals("")){
+      Integer maxLocallyStoredMessages = Integer.valueOf( maxLocallyStoredMessagesString );
+      if(maxLocallyStoredMessages > 0){
+        MAX_DISPLAYED_MESSAGES = maxLocallyStoredMessages;
+      }
+    }
 
     // Get the last X (MAX_DISPLAYED_MESSAGES) messages because new items are added to the end of the list
     int startSubListIndex = totalMessagesListCount - MAX_DISPLAYED_MESSAGES;
@@ -264,8 +268,10 @@ public class MainActivity extends BaseActivity {
       }
 
       P2000Message m = getItem(position);
-      Long timestamp = Long.valueOf( m.getTimestamp() );
+      Long timestamp = m.getTimestamp();
+      Long arrivalTimestamp = m.getArrivalTimestamp();
       Date messageDateObj = new Date( timestamp );
+      Date messageArrivalDateObj = new Date( arrivalTimestamp );
 
       // Get some basic info about the P2000 message
       SimpleP2000Processor.EmergencyPriority prio = SimpleP2000Processor.getPriority( m.getMessage() );
@@ -275,8 +281,9 @@ public class MainActivity extends BaseActivity {
       // Set heading texts
       viewHolder.textHeadingCapcode.setText( m.getCapcode() );
       viewHolder.textHeadingPriority.setText( prio.toString() );
-      viewHolder.textHeadingTime.setText( DateFormatter.formatFullTime(messageDateObj) );
-
+      //viewHolder.textHeadingTime.setText( DateFormatter.formatFullTime(messageDateObj) + " - " + DateFormatter.formatFullTime( messageArrivalDateObj ) );
+      viewHolder.textHeadingTime.setText( new SimpleDateFormat("HH:mm:ss").format( messageDateObj) + " - " + new SimpleDateFormat("HH:mm:ss").format(messageArrivalDateObj) );
+       
       // Set the actual P2000 message
       viewHolder.textView.setText( m.getMessage() );
 

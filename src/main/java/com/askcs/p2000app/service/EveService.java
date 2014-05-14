@@ -19,7 +19,6 @@ import com.almende.eve.state.FileStateFactory;
 import com.almende.eve.transport.xmpp.XmppService;
 import com.almende.util.ClassUtil;
 import com.askcs.commons.agent.AskAgent;
-import com.askcs.commons.entity.P2000Message;
 import com.askcs.p2000app.R;
 import com.askcs.p2000app.agent.MobileAgent;
 import com.askcs.p2000app.app.LoaderActivity;

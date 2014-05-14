@@ -17,7 +17,7 @@
         <android-analytics.version>3</android-analytics.version>
 		<android.plugin.version>3.6.0</android.plugin.version>
         <android.target>19</android.target>
-        <eve.version>2.1.0-SNAPSHOT</eve.version>
+        <eve.version>2.2.1</eve.version>
         <askpack.version>0.0.1-SNAPSHOT</askpack.version>
         <askpack-agents.version>0.0.1-SNAPSHOT</askpack-agents.version>
         <crouton.version>1.8.1</crouton.version>

@@ -28,7 +28,12 @@ public class Cryptography {
     }
 
     m.update(str.getBytes(), 0, str.length());
-    String hash = new BigInteger(1, m.digest()).toString(16);
-    return hash;
+    byte[] bytes = m.digest();
+    StringBuffer hash = new StringBuffer(32);
+    for ( int i = 0; i < bytes.length; i++ ) {
+      hash.append( Integer.toHexString( (bytes[ i ] >>> 4) & 0xf ) );
+      hash.append( Integer.toHexString( bytes[ i ] & 0xf ) );
+    }
+    return hash.toString();
   }
 }

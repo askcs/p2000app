@@ -48,9 +48,4 @@ public class BaseEveService extends Service {
     super.onDestroy();
     BusProvider.getBus().unregister( this );
   }
-
-  @SuppressWarnings( "unused" )
-  public Application getStandByApplication() {
-    return (Application) super.getApplication();
-  }
 }

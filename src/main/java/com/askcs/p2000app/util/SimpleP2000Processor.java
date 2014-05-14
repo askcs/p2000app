@@ -22,6 +22,9 @@ public class SimpleP2000Processor {
 
     // Basic checks based on words. Real message + service matching should be done serverside based on the capcode
 
+    // Full message uppercase
+    msg = msg.toUpperCase();
+
     if(msg.contains(" LFL") || msg.contains("MMT")){ // At the top, because lifeliners also have 'AMBU' in their message sometimes
       return EmergencyService.LIFELINER;
     }
@@ -38,7 +41,7 @@ public class SimpleP2000Processor {
       return EmergencyService.TEST;
     }
 
-    if(msg.contains(" AANRIJDING") || msg.contains(" LETSEL  ")){
+    if(msg.contains(" AANRIJDING") || msg.contains("AANRIJDING ") || msg.contains("LETSEL ") || msg.contains(" LETSEL")){
       return EmergencyService.POLICE;
     }
 
